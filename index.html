@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dirt Busters Chatbot Demo</title>
+  <style>
+    body { font-family: Arial; margin: 0; padding: 0; }
+    #chat-container { position: fixed; bottom: 20px; right: 20px; width: 300px; max-height: 400px; }
+    #chat-box { background: #fff; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; flex-direction: column; height: 100%; }
+    #messages { flex: 1; padding: 10px; overflow-y: auto; }
+    .message { margin-bottom: 10px; }
+    .bot { color: #333; }
+    .user { text-align: right; color: #0066cc; }
+    #input-area { display: flex; border-top: 1px solid #ccc; }
+    #user-input { flex: 1; padding: 8px; border: none; }
+    #send-btn { padding: 8px 12px; border: none; background: #0066cc; color: #fff; cursor: pointer; }
+    #chat-toggle { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background: #0066cc; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 24px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<div id="chat-toggle">💬</div>
+
+<div id="chat-container" style="display:none;">
+  <div id="chat-box">
+    <div id="messages"></div>
+    <div id="input-area">
+      <input id="user-input" placeholder="Type…" />
+      <button id="send-btn">Send</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const toggle = document.getElementById('chat-toggle');
+const chat = document.getElementById('chat-container');
+const messages = document.getElementById('messages');
+const input = document.getElementById('user-input');
+const send = document.getElementById('send-btn');
+
+toggle.onclick = () => {
+  chat.style.display = chat.style.display === 'none' ? 'block' : 'none';
+};
+
+function addMessage(sender, text) {
+  let div = document.createElement('div');
+  div.className = 'message ' + sender;
+  div.textContent = text;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+send.onclick = () => {
+  const text = input.value.trim();
+  if (!text) return;
+  addMessage('user', text);
+  input.value = '';
+
+  // fake bot reply (until we add your API)
+  setTimeout(() => {
+    addMessage('bot', "This is a demo. I’ll be connected to your AI backend once deployed.");
+  }, 500);
+};
+
+addMessage('bot', 'Hi! I’m the Dirt Busters AI Chatbot 👋');
+</script>
+
+</body>
+</html>
